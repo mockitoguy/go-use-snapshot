@@ -83,11 +83,6 @@ func findSnapshot(rootDir string) *snapshot {
 	}
 }
 
-func findSnapshotInLocalRepo() *snapshot {
-	repo := getLocalRepoMpPath()
-	return findSnapshot(repo)
-}
-
 func getLocalRepoMpPath() string {
 	dir, e := os.UserHomeDir()
 	if e != nil {

@@ -5,8 +5,10 @@ import (
 	"io/ioutil"
 )
 
-func run(productSpecPath string) string {
-	snapshot := findSnapshotInLocalRepo()
+const resultUpdated = "product-spec.json was updated! Stay happy!"
+
+func run(productSpecPath string, localRepoMpDir string) string {
+	snapshot := findSnapshot(localRepoMpDir)
 	if snapshot == nil {
 		return "Unable to find any snapshot inside of ~/local-repo"
 	}
@@ -27,7 +29,7 @@ func run(productSpecPath string) string {
 
 	mustWriteFile(productSpecPath, content)
 
-	return "product-spec.json was updated! Stay happy!"
+	return resultUpdated
 }
 
 func mustWriteFile(filePath string, content string) {
@@ -38,6 +40,6 @@ func mustWriteFile(filePath string, content string) {
 }
 
 func main() {
-	message := run("product-spec.json")
+	message := run("product-spec.json", getLocalRepoMpPath())
 	fmt.Print(message)
 }

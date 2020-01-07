@@ -6,7 +6,7 @@ import (
 )
 
 func createArtifactInLocalRepo(mp string, version string, t *testing.T) string {
-	s := findSnapshotInLocalRepo()
+	s := findSnapshot(getLocalRepoMpPath())
 	if s != nil {
 		assertTrue(s.version != version, t)
 	}
@@ -18,15 +18,7 @@ func createArtifactInLocalRepo(mp string, version string, t *testing.T) string {
 	return mpDir
 }
 
-func assertSafeVersion(version string, t *testing.T) string {
-	s := findSnapshotInLocalRepo()
-	if s != nil {
-		assertTrue(s.version != version, t)
-	}
-	return version
-}
-
-func TestRun(t *testing.T) {
+func TestE2E(t *testing.T) {
 	mpDir := createArtifactInLocalRepo("dummy-mp-for-testing", "155.0.0-SNAPSHOT", t)
 	defer os.RemoveAll(mpDir)
 
@@ -35,10 +27,10 @@ func TestRun(t *testing.T) {
 	mustWriteFile(specFile, mustReadFile("testdata/product-only.json"))
 
 	//when
-	result := run(specFile)
+	result := run(specFile, getLocalRepoMpPath())
 
 	//then
-	assertEquals("product-spec.json was updated! Stay happy!", result, t)
+	assertEquals(resultUpdated, result, t)
 
 	//and
 	expected := mustReadFile("testdata/product-only_updated.json")
