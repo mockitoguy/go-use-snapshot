@@ -6,11 +6,12 @@ import (
 )
 
 const resultUpdated = "product-spec.json was updated! Stay happy!"
+const resultNoSnapshot = "Unable to find any snapshot inside of ~/local-repo. Please inspect this directory."
 
 func run(productSpecPath string, localRepoMpDir string) string {
 	snapshot := findSnapshot(localRepoMpDir)
 	if snapshot == nil {
-		return "Unable to find any snapshot inside of ~/local-repo"
+		return resultNoSnapshot
 	}
 	fmt.Printf("Found most recent snapshot of '%v' at version '%v'\n", snapshot.mp, snapshot.version)
 
