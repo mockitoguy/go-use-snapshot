@@ -40,11 +40,12 @@ func run(productSpecPath string, localRepoMpDir string,
 func mustWriteFile(filePath string, content string) {
 	e := ioutil.WriteFile(filePath, []byte(content), 0644) //TODO: don't change the file mode
 	if e != nil {
-		panic(fmt.Sprintf("Unable to update file: '%v' due to: %v\n", filePath, e.Error()))
+		panic(fmt.Sprintf("Unable to update file: '%v' due to: %v", filePath, e.Error()))
 	}
 }
 
 func main() {
+	//TODO: support cmd line args like p-spec.json file
 	message := run("product-spec.json", getLocalRepoMpPath(), updateVersion)
 	fmt.Print(message)
 }
