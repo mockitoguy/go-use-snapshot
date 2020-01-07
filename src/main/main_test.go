@@ -36,7 +36,7 @@ func TestE2E(t *testing.T) {
 	specFile := createProductSpec("testdata/product-only.json")
 
 	//when
-	result := run(specFile, getLocalRepoMpPath())
+	result := run(specFile, getLocalRepoMpPath(), updateVersion)
 
 	//then
 	assertEquals(resultUpdated, result, t)
@@ -49,7 +49,7 @@ func TestE2E(t *testing.T) {
 
 func TestNoSnapshotFound(t *testing.T) {
 	//when
-	result := run("product-spec.json", "not existing dir")
+	result := run("product-spec.json", "not existing dir", updateVersion)
 
 	//then
 	assertEquals(resultNoSnapshot, result, t)
@@ -58,9 +58,10 @@ func TestNoSnapshotFound(t *testing.T) {
 func TestNoProductSpec(t *testing.T) {
 	//given
 	dir, _ := createTmpFiles("mp/module/1.0.0-SNAPSHOT/artifact.jar")
+	returnFalse := func(productSpecContent *string, mp string, version string) bool { return false }
 
 	//when
-	result := run("product-spec.json", dir)
+	result := run("product-spec.json", dir, returnFalse)
 
 	//then
 	assertEquals(resultNoProductSpec, result, t)

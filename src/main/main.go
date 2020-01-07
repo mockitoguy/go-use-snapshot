@@ -8,8 +8,11 @@ import (
 const resultUpdated = "product-spec.json was updated! Stay happy!"
 const resultNoSnapshot = "Unable to find any snapshot inside of ~/local-repo. Please inspect this directory."
 const resultNoProductSpec = "Unable to read 'product-spec.json' file in current directory. Does it exist?"
+const resultNotUpdated = "product-spec.json was not updated! Does it declare dependency on '%v'?"
 
-func run(productSpecPath string, localRepoMpDir string) string {
+func run(productSpecPath string, localRepoMpDir string,
+	updateVersionFunc func(productSpecContent *string, mp string, version string) bool) string {
+
 	snapshot := findSnapshot(localRepoMpDir)
 	if snapshot == nil {
 		return resultNoSnapshot
@@ -23,10 +26,10 @@ func run(productSpecPath string, localRepoMpDir string) string {
 
 	content := string(productSpec)
 
-	updated := updateVersion(&content, snapshot.mp, snapshot.version)
+	updated := updateVersionFunc(&content, snapshot.mp, snapshot.version)
 
 	if !updated {
-		return fmt.Sprintf("product-spec.json was not updated! Does it declare dependency on '%v'?", snapshot.mp)
+		return fmt.Sprintf(resultNotUpdated, snapshot.mp)
 	}
 
 	mustWriteFile(productSpecPath, content)
@@ -42,6 +45,6 @@ func mustWriteFile(filePath string, content string) {
 }
 
 func main() {
-	message := run("product-spec.json", getLocalRepoMpPath())
+	message := run("product-spec.json", getLocalRepoMpPath(), updateVersion)
 	fmt.Print(message)
 }
