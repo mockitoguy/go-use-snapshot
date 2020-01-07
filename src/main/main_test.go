@@ -54,3 +54,14 @@ func TestNoSnapshotFound(t *testing.T) {
 	//then
 	assertEquals(resultNoSnapshot, result, t)
 }
+
+func TestNoProductSpec(t *testing.T) {
+	//given
+	dir, _ := createTmpFiles("mp/module/1.0.0-SNAPSHOT/artifact.jar")
+
+	//when
+	result := run("product-spec.json", dir)
+
+	//then
+	assertEquals(resultNoProductSpec, result, t)
+}

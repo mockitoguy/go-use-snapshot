@@ -15,7 +15,7 @@ func mustCreateTempDir() string {
 	return dir
 }
 
-func createFiles(paths ...string) (string, []string) {
+func createTmpFiles(paths ...string) (string, []string) {
 	result := make([]string, len(paths))
 	rootDir := mustCreateTempDir()
 
@@ -49,7 +49,7 @@ func touchFile(path string) {
 func TestFindLatestSnapshot(t *testing.T) {
 	//example: /Users/sfaber/local-repo/com/linkedin/ligradle-core/core/4.0.67-SNAPSHOT
 	//rootDir := "/Users/sfaber/local-repo/com/linkedin"
-	rootDir, artifacts := createFiles(
+	rootDir, artifacts := createTmpFiles(
 		"mp1/moduleA/0.0.0-SNAPSHOT/0.zip",
 		"mp1/moduleA/1.0.0-SNAPSHOT/1.zip",
 		"mp1/moduleB/2.0.0-SNAPSHOT/2.zip",

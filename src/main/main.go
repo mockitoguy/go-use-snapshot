@@ -7,6 +7,7 @@ import (
 
 const resultUpdated = "product-spec.json was updated! Stay happy!"
 const resultNoSnapshot = "Unable to find any snapshot inside of ~/local-repo. Please inspect this directory."
+const resultNoProductSpec = "Unable to read 'product-spec.json' file in current directory. Does it exist?"
 
 func run(productSpecPath string, localRepoMpDir string) string {
 	snapshot := findSnapshot(localRepoMpDir)
@@ -17,7 +18,7 @@ func run(productSpecPath string, localRepoMpDir string) string {
 
 	productSpec, e := ioutil.ReadFile(productSpecPath)
 	if e != nil {
-		return "Unable to read 'product-spec.json' file in current directory. Does it exist?"
+		return resultNoProductSpec
 	}
 
 	content := string(productSpec)
