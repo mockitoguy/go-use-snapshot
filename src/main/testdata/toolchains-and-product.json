@@ -1,0 +1,45 @@
+{
+  "name": "ligradle-jvm",
+  "build": {
+    "toolchains": {
+      "gradle": {
+        "plugins": {
+          "ligradle-core": {
+            "libraries": [
+              "ligradle-core"
+            ],
+            "version": "4.0.0"
+          },
+          "dummy-mp-for-testing": {
+            "libraries": [
+              "product-plugins"
+            ],
+            "version": "@spec.product.dummy-mp-for-testing.version@"
+          }
+        },
+        "version": "5.2.1"
+      }
+    },
+    "type": "gradle",
+    "versions": {
+      "java": "1.8.0_172"
+    }
+  },
+  "external": {
+    "apacheCommonsIO": "commons-io:commons-io:2.5"
+  },
+  "product": {
+    "cfg2": {
+      "libraries": [
+        "cfg"
+      ],
+      "version": "6.0.8"
+    },
+    "dummy-mp-for-testing": {
+      "libraries": [
+        "product-plugins"
+      ],
+      "version": "4.*"
+    }
+  }
+}
