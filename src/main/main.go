@@ -47,5 +47,5 @@ func mustWriteFile(filePath string, content string) {
 func main() {
 	//TODO: support cmd line args like p-spec.json file
 	message := run("product-spec.json", getLocalRepoMpPath(), updateVersion)
-	fmt.Print(message)
+	fmt.Println(message)
 }
